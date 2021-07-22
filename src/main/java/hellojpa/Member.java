@@ -12,7 +12,16 @@ public class Member {
     private Long id;
 
     //@Column(name = "username") username 칼럼에 저장장
-   private String name;
+    private String name;
+
+    public Member() {
+
+    }
+
+    public Member(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
