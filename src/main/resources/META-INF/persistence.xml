@@ -16,7 +16,11 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="10"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create" /> 테이블 만들떄마다 drop하고 create-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" /> 테이블 종료시점에 drop-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="update" /> drop하지않고 칼럼만추가 지우는건 안됨-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="validate" />  정상적으로 매핑되었는지만 확인-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="none" /> 사용하지 않음음->
         </properties>
     </persistence-unit>
 </persistence>
