@@ -51,7 +51,12 @@ public class JpaMain {
             //엔티티 변경
             /*Member member = em.find(Member.class, 150L);
             member.setName("ZZZZZ");*/
+            Member member = new Member();
+            member.setId(3L);
+            member.setUsername("C");
+            member.setRoleType(RoleType.GUEST);
 
+            em.persist(member);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
