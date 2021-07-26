@@ -51,11 +51,30 @@ public class JpaMain {
             //엔티티 변경
             /*Member member = em.find(Member.class, 150L);
             member.setName("ZZZZZ");*/
-            Member member = new Member();
+            /*Member member = new Member();
             member.setUsername("C");
-            member.setRoleType(RoleType.GUEST);
+            member.setRoleType(RoleType.GUEST);*/
 
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMeber = em.find(Member.class,member.getId());
+
+            Team findTeam = findMeber.getTeam();
+            System.out.println("findTeam  = " + findTeam.getName());
+
+            //100번있다 가정하고 update
+            /*Team newTeam= em.find(Team.class, 100L);
+            findMeber.setTeam(newTeam);*/
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

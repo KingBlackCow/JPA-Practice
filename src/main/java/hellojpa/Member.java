@@ -22,44 +22,71 @@ import java.util.Date;
         pkColumnValue = "MEMBER_SEQ", allocationSize = 50)
 @Data
 public class Member {
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE generator = "MEMBER_SEQ_GENERATOR")// Auto 디비방언에 따라 자동생성
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "MEMBER_SEQ_GENERATOR")
+//    @Id
+//    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+//    //@GeneratedValue(strategy = GenerationType.SEQUENCE generator = "MEMBER_SEQ_GENERATOR")// Auto 디비방언에 따라 자동생성
+//    @GeneratedValue(strategy = GenerationType.TABLE,generator = "MEMBER_SEQ_GENERATOR")
+//
+//    private Long id;
+//    @Column(name = "name",insertable = true, updatable = true
+//            , nullable = true
+//            /*, unique = true*/
+//            /*,columnDefinition = "varchar(100) default 'EMPTY'"*/
+//
+//            )
+//    //엥간하면 Column에 unique쓰지말기
+//    private String username;
+//
+//    private Integer age;//가장적절한 인티저로 변환
+//
+//    @Enumerated(EnumType.STRING)//db에 이넘타입 없어서 사용할떄 사용.
+//    private RoleType roleType;//EnumType.ORDINAL: enum의 순서를 db에 저장, EnumType.STRING : enum의 이름을 db에저장
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createdDate;
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date lastModifiedDate;
+//
+//    private LocalDate testLocalDate;//날짜까지 date형식으로 만들어짐
+//    private LocalDateTime testLocalDateTime;// 날짜+시간 timestamp로 만들어짐
+//
+//
+//    @Lob//데이터베이스에 큰 컨텐츠를 넣고 싶은 경우 dlob이랑 clob이 있는데 문자타입이면 clob 나머지는 blob으로 저장
+//    private String description;
+//
+//    @Transient//db랑 매핑 안시킴
+//    private int temp;
+//
+//    public Member() {
+//
+//    }
 
+
+
+    @Id @GeneratedValue
     private Long id;
-    @Column(name = "name",insertable = true, updatable = true
-            , nullable = true
-            /*, unique = true*/
-            /*,columnDefinition = "varchar(100) default 'EMPTY'"*/
-
-            )
-    //엥간하면 Column에 unique쓰지말기
+    @Column(name = "USERNAME")
     private String username;
 
-    private Integer age;//가장적절한 인티저로 변환
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
-    @Enumerated(EnumType.STRING)//db에 이넘타입 없어서 사용할떄 사용.
-    private RoleType roleType;//EnumType.ORDINAL: enum의 순서를 db에 저장, EnumType.STRING : enum의 이름을 db에저장
+    public Long getId() {
+        return id;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    public String getUsername() {
+        return username;
+    }
 
-    private LocalDate testLocalDate;//날짜까지 date형식으로 만들어짐
-    private LocalDateTime testLocalDateTime;// 날짜+시간 timestamp로 만들어짐
-
-
-    @Lob//데이터베이스에 큰 컨텐츠를 넣고 싶은 경우 dlob이랑 clob이 있는데 문자타입이면 clob 나머지는 blob으로 저장
-    private String description;
-
-    @Transient//db랑 매핑 안시킴
-    private int temp;
-
-    public Member() {
-
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 
