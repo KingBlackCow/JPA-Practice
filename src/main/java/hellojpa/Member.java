@@ -65,7 +65,9 @@ public class Member {
 
 
     @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
+
     @Column(name = "USERNAME")
     private String username;
 
@@ -81,6 +83,15 @@ public class Member {
         this.id = id;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -88,6 +99,6 @@ public class Member {
     public void setUsername(String username) {
         this.username = username;
     }
-
+     
 
 }

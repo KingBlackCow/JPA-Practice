@@ -12,7 +12,7 @@ public class Team {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team")//Member에 있는 변수명 단순한 읽기만 가능하게 해줌
     private List<Member> members = new ArrayList<>();
 
     public Long getId() {
@@ -37,5 +37,10 @@ public class Team {
 
     public void setMembers(List<Member> members) {
         this.members = members;
+    }
+
+    public void addMember(Member member) {
+        member.setTeam(this);
+        members.add(member);
     }
 }
