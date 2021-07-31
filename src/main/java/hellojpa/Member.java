@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 //@Table(name = "User") //이러면 원래는 Member이지만 USER테이블에 저장
@@ -81,6 +83,8 @@ public class Member {
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
 
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "TEAM_ID")
 //    private Team team;
