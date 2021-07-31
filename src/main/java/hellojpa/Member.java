@@ -71,9 +71,15 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEAM_ID")
+
+    //다대일 양방향
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID",insertable = false,updatable = false)
     private Team team;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "TEAM_ID")
+//    private Team team;
 
     public Long getId() {
         return id;
@@ -83,14 +89,14 @@ public class Member {
         this.id = id;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
-    }
+//    public Team getTeam() {
+//        return team;
+//    }
+//
+//    public void changeTeam(Team team) {
+//        this.team = team;
+//        team.getMembers().add(this);
+//    }
 
     public String getUsername() {
         return username;

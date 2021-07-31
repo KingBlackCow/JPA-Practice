@@ -55,19 +55,6 @@ public class JpaMain {
             member.setUsername("C");
             member.setRoleType(RoleType.GUEST);*/
 
-
-            Team team = new Team();
-            team.setName("TeamA");
-
-            em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member1");
-            //member.changeTeam(team);//연관관계 편의 메소드
-            team.addMember(member);//연관관계 편의 메소드
-            em.persist(member);
-
-
             //양방향 연관관계 주의 -실습
             /*
                 순수 객체 상태를 고려해서 항상 양쪽에 값을 설정하자
@@ -78,20 +65,23 @@ public class JpaMain {
             //em.flush();
             //em.clear();
 
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members = findTeam.getMembers();
-            System.out.println("-------------------------------");
-            for (Member m : members) {
-                System.out.println(m.getUsername());
-            }
-            System.out.println("-------------------------------");
-
             /*Team findTeam = findMember.getTeam();
             System.out.println("findTeam  = " + findTeam.getName());*/
 
             //100번있다 가정하고 update
             /*Team newTeam= em.find(Team.class, 100L);
             findMeber.setTeam(newTeam);*/
+
+            Member member = new Member();
+
+            member.setUsername("member1");
+            em.persist(member);
+            Team team =new Team();
+            team.setName("teamA");
+
+            //
+            team.getMembers().add(member);
+            em.persist(team);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
