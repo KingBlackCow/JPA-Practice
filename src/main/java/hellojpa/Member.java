@@ -23,7 +23,7 @@ import java.util.List;
         table = "MY_SEQUENCES",
         pkColumnValue = "MEMBER_SEQ", allocationSize = 50)
 @Data
-public class Member {
+public class Member extends BaseEntity {
 //    @Id
 //    //@GeneratedValue(strategy = GenerationType.IDENTITY)
 //    //@GeneratedValue(strategy = GenerationType.SEQUENCE generator = "MEMBER_SEQ_GENERATOR")// Auto 디비방언에 따라 자동생성
@@ -82,6 +82,8 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
+
+
 
 //    @OneToMany(mappedBy = "member")
 //    private List<MemberProduct> memberProducts = new ArrayList<>();
