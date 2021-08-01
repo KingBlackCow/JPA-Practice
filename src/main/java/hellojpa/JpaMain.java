@@ -43,7 +43,7 @@ public class JpaMain {
             //DB에 tx.commit 전까지 1차캐시에 저장 후 한번에 저장
             /*Member member1 = new Member(150L, "A");
             Member member2 = new Member(160L, "B");
-            em.persist(member1);
+            eZm.persist(member1);
             em.persist(member2);
             System.out.println("---------------");*/
 
@@ -72,16 +72,31 @@ public class JpaMain {
             /*Team newTeam= em.find(Team.class, 100L);
             findMeber.setTeam(newTeam);*/
 
-            Member member = new Member();
+//            Member member = new Member();
+//
+//            member.setUsername("member1");
+//            em.persist(member);
+//            Team team =new Team();
+//            team.setName("teamA");
+//
+//            //
+//            team.getMembers().add(member);
+//            em.persist(team);
 
-            member.setUsername("member1");
-            em.persist(member);
-            Team team =new Team();
-            team.setName("teamA");
 
-            //
-            team.getMembers().add(member);
-            em.persist(team);
+            Movie movie = new Movie();
+            movie.setDirector("aah");
+            movie.setActor("bobby");
+            movie.setName("바람과함께사라지다");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Item findMovie = em.find(Item.class, movie.getId());
+            System.out.println(findMovie);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
