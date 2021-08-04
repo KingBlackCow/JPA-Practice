@@ -1,9 +1,6 @@
 package hellojpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -98,31 +95,63 @@ public class JpaMain {
 
             Item findMovie = em.find(Item.class, movie.getId());
             System.out.println(findMovie);*/
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            em.persist(member1);
 
-            Member member2 = new Member();
-            member2.setUsername("member2");
-            em.persist(member2);
-            Member m1 = em.find(Member.class, member1.getId());
-            em.flush();
-            em.clear();
-
-
-            /*Member m2 = em.getReference(Member.class, member2.getId());
-            System.out.println("m1==m2 "+(m1 instanceof Member));
-            System.out.println("m1==m2 "+(m2 instanceof Member));*/
-            Member refMember = em.getReference(Member.class, member1.getId());
-            System.out.println("refMember = " +refMember.getClass());
-            refMember.getUsername();
-            System.out.println("isLoaded = " +emf.getPersistenceUnitUtil().isLoaded(refMember));//true 이면 프록시인스턴스 초기화
+            /*System.out.println("refMember = " +m.getClass());
+            m.getUsername();
+            System.out.println("isLoaded = " +emf.getPersistenceUnitUtil().isLoaded(m));*///true 이면 프록시인스턴스 초기화
             //Member findMember = em.find(Member.class, member.getId());
             //Member findMember = em.getReference(Member.class,member.getId());// 지금 가져오지않고 원할때 호출
             //em.getReeference(): 데이터베이스 조회를 미루는 가짜(프록시) 엔티티 객체 조회
             //System.out.println("findMember "+ findMember.getClass());
             //System.out.println("findMember.id = " + findMember.getId());//이미 아이디값이 있기에
             //System.out.println("findMember.username = " + findMember.getUsername());//이름값은 없기 때문에 db호출
+
+
+            /*Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
+
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
+
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setTeam(teamA);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setTeam(teamB);
+            em.persist(member2);
+
+
+            em.flush();
+            em.clear();*/
+
+            /*Member m = em.find(Member.class, member1.getId());
+            System.out.println("m= " +m.getTeam().getClass());
+            System.out.println("========================================");
+            m.getTeam().getName();
+            System.out.println("========================================");*/
+
+            //List<Member> members =em.createQuery("select m from Member m",Member.class)
+              //      .getResultList();
+            Parent parent=new Parent();
+            Child child1 =new Child();
+            Child child2 =new Child();
+
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent=em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

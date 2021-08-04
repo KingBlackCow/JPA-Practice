@@ -65,8 +65,8 @@ public class Member extends BaseEntity {
 //    }
 
 
-
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
@@ -75,14 +75,14 @@ public class Member extends BaseEntity {
 
 
     //다대일 양방향
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID",insertable = false,updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID")
     private Team team;
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
-
+*/
 
 
 //    @OneToMany(mappedBy = "member")
@@ -115,6 +115,6 @@ public class Member extends BaseEntity {
     public void setUsername(String username) {
         this.username = username;
     }
-     
+
 
 }
