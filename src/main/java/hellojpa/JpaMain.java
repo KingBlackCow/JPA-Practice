@@ -161,6 +161,7 @@ public class JpaMain {
             em.persist(member);
 
             Address newAddress = new Address("NewCity", address.getStreet(), address.getZipcode());
+            Address newAddress2 = new Address("NewCity", address.getStreet(), address.getZipcode());
             member.setHomeAddress(newAddress);
             em.persist(member);
 //            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
