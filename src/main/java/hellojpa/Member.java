@@ -1,15 +1,8 @@
 package hellojpa;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 //@Table(name = "User") //이러면 원래는 Member이지만 USER테이블에 저장
@@ -23,7 +16,9 @@ import java.util.List;
         table = "MY_SEQUENCES",
         pkColumnValue = "MEMBER_SEQ", allocationSize = 50)
 @Data
-public class Member extends BaseEntity {
+//public class Member extends BaseEntity {
+public class Member {
+
 //    @Id
 //    //@GeneratedValue(strategy = GenerationType.IDENTITY)
 //    //@GeneratedValue(strategy = GenerationType.SEQUENCE generator = "MEMBER_SEQ_GENERATOR")// Auto 디비방언에 따라 자동생성
@@ -73,11 +68,31 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
     private String username;
 
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
 
-    //다대일 양방향
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    //주소
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city",
+                    column = @Column(name="WORK_CITY")),
+            @AttributeOverride( name = "street",
+                    column = @Column(name="WORK_STREET")),
+            @AttributeOverride(name = "zipcode",
+                    column = @Column(name="WORK_ZIPCODE"))
+    })
+    private Address workAddress;
+
+//    //다대일 양방향
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "TEAM_ID")
+//    private Team team;
+
+
 
     /*@OneToOne
     @JoinColumn(name = "LOCKER_ID")
