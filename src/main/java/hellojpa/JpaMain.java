@@ -136,7 +136,7 @@ public class JpaMain {
             System.out.println("========================================");*/
 
             //List<Member> members =em.createQuery("select m from Member m",Member.class)
-              //      .getResultList();
+            //      .getResultList();
 //            Parent parent=new Parent();
 //            Child child1 =new Child();
 //            Child child2 =new Child();
@@ -151,12 +151,28 @@ public class JpaMain {
 //
 //            Parent findParent=em.find(Parent.class, parent.getId());
 //            findParent.getChildList().remove(0);
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city","street","100"));
-            member.setWorkPeriod(new Period());
+            //member.setWorkPeriod(new Period());
 
+            Address address = new Address("city", "street", "100");
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(address);
             em.persist(member);
+
+            Address newAddress = new Address("NewCity", address.getStreet(), address.getZipcode());
+            member.setHomeAddress(newAddress);
+            em.persist(member);
+//            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+//
+//            Member member2 = new Member();
+//            member2.setUsername("member2");
+//            member2.setHomeAddress(copyAddress);
+//            em.persist(member2);
+//
+
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

@@ -69,8 +69,8 @@ public class Member {
     private String username;
 
     //기간 Period
-    @Embedded
-    private Period workPeriod;
+    //@Embedded
+    //private Period workPeriod;
 
     //주소
     @Embedded
