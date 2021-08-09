@@ -2,6 +2,9 @@ package hellojpa;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -76,7 +79,44 @@ public class Member {
     @Embedded
     private Address homeAddress;
 
-    @Embedded
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    //@OrderColumn(name = "address_history_order")
+//    @ElementCollection
+//    @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name="MEMBER_ID"))
+//    private List<Address> addressHistory = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "MEMBER_ID")
+    private List<AddressEntity> addressHistory = new ArrayList<>();
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<AddressEntity> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<AddressEntity> addressHistory) {
+        this.addressHistory = addressHistory;
+    }
+/*@Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "city",
                     column = @Column(name="WORK_CITY")),
@@ -85,7 +125,8 @@ public class Member {
             @AttributeOverride(name = "zipcode",
                     column = @Column(name="WORK_ZIPCODE"))
     })
-    private Address workAddress;
+    private Address workAddress;*/
+
 
 //    //다대일 양방향
 //    @ManyToOne(fetch = FetchType.LAZY)
