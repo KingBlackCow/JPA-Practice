@@ -1,9 +1,13 @@
 package hellojpa;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -172,22 +176,22 @@ public class JpaMain {
 //            em.persist(member2);
 //
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity","street","123"));
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
-            //member.getAddressHistory().add(new Address("old1","street","123"));
-            //member.getAddressHistory().add(new Address("old2","street","123"));
-
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            System.out.println("========== START =============");
-            Member findMember = em.find(Member.class, member.getId());
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setHomeAddress(new Address("homeCity","street","123"));
+//            member.getFavoriteFoods().add("치킨");
+//            member.getFavoriteFoods().add("족발");
+//            member.getFavoriteFoods().add("피자");
+//            //member.getAddressHistory().add(new Address("old1","street","123"));
+//            //member.getAddressHistory().add(new Address("old2","street","123"));
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            System.out.println("========== START =============");
+//            Member findMember = em.find(Member.class, member.getId());
 
             //조회
 //            List<Address> addressHistory = findMember.getAddressHistory();
@@ -198,15 +202,35 @@ public class JpaMain {
 //            for (String favoriteFood: favoriteFoods) {
 //                System.out.println("favoriteFood = "+favoriteFood);
 //            }
-            Address a= findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newCity",a.getStreet(),a.getZipcode()));
+//            Address a= findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity",a.getStreet(),a.getZipcode()));
+//
+//            //치킨 -> 한식
+//            findMember.getFavoriteFoods().remove("치킨");
+//            findMember.getFavoriteFoods().add("한식");
+//
+//            findMember.getAddressHistory().add(new AddressEntity("old1","street","123"));
+//            findMember.getAddressHistory().add(new AddressEntity("newCity1","street","123"));
 
-            //치킨 -> 한식
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
+//            List<Member> resultList = em.createQuery(
+//                    "select m From Member m where m.username like '%kim%'",
+//                    Member.class
+//            ).getResultList();
+//            for (Member member: resultList) {
+//                System.out.println("member = "+member);
+//            }
 
-            findMember.getAddressHistory().add(new AddressEntity("old1","street","123"));
-            findMember.getAddressHistory().add(new AddressEntity("newCity1","street","123"));
+            //Criteria 소개
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+//            Root<Member> m = query.from(Member.class);
+//            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+//            List<Member> resultList = em.createQuery(cq).getResultList();
+
+
+            //Native Query
+            em.createNativeQuery("select MEMBER_ID,city,street,zipcode,USERNAME from MEMBER")
+                    .getResultList();
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
